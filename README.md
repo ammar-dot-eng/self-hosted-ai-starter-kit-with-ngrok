@@ -1,290 +1,193 @@
-# Remember to give a STAR 🌟 on Github if you found this repository useful. 😊
+# 🚀 Self-Hosted AI Starter Kit (with Ngrok)
 
-# self-hosted-ai-starter-kit-with-ngrok
+*A beginner-friendly fork of the excellent original project.*
 
-- This is a fork from [github self-hosted-ai-starter-kit](https://github.com/n8n-io/self-hosted-ai-starter-kit) to include Ngrok tunnel to show and connect your local n8n proyects to the world
-- This config available to connect your local n8n with external API like Telegram, Google Drive, Google Sheets, Airtable, Slack, Whatsapp, etc.
+> **Forked from:** [https://github.com/DevilUpperCase/self-hosted-ai-starter-kit-with-ngrok](https://github.com/DevilUpperCase/self-hosted-ai-starter-kit-with-ngrok)
+> This version includes **beginner-friendly setup instructions** and simplifies the entire process of self-hosting AI tools using Docker + Ngrok, And adds some code fixes that worked for myself. 
 
-## Quick Setup Steps 🏃‍➡️
+---
 
-### 1. Clone the repository (you can change 'my-n8n-ngrok' to your preferred name):
-```bash
-git clone https://github.com/DevilUpperCase/self-hosted-ai-starter-kit-with-ngrok.git my-n8n-ngrok
-cd my-n8n-ngrok
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Stable-brightgreen?style=for-the-badge">
+  <img src="https://img.shields.io/badge/Docker-Ready-blue?style=for-the-badge&logo=docker">
+  <img src="https://img.shields.io/badge/n8n-Automation-orange?style=for-the-badge&logo=n8n">
+  <img src="https://img.shields.io/badge/Ngrok-Tunneling-purple?style=for-the-badge&logo=ngrok">
+</p>
+
+---
+
+# 📦 What You Get
+
+* 🌐 Publicly accessible **n8n automation service** via Ngrok
+* ⚡ GPU-accelerated support for AMD & NVIDIA
+* 🐳 Fully containerized setup using Docker
+* 🧠 Integrated Qdrant vector database
+* 🧩 Zero manual server configuration
+* 🎯 Perfect for LLM workflows, agents, pipelines, automations
+
+---
+
+# 🛠 1. Install Docker Desktop
+
+## **Option A — Install Docker on the `D:` drive (advanced users)**
+
+1. Create a new folder anywhere on your `D:` drive.
+2. Download **Docker Desktop Installer.exe** from:
+   [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
+   Place it in that folder.
+3. Copy the folder path.
+4. Open **Command Prompt as Administrator**.
+5. Run:
+
+```cmd
+cd your-folder-path
 ```
 
-### 2. Set up your environment:
-```bash
-cp .env.example .env
-```
-Edit the `.env` file with your specific configuration:
-- Set your database credentials
-- Configure your n8n security keys
-- Add your ngrok token and host
-- Set your Ollama path
+Then run the installer:
 
-### 3. Configure ngrok:
-```bash
-cp ngrok.yml.example ngrok.yml
-```
-Edit `ngrok.yml` with your specific configuration:
-- Add your ngrok authtoken
-- Set your domain configuration
-
-### 4. Start the services:
-```bash
-docker compose -p my-n8n-ngrok --profile cpu up -d
+```cmd
+start /w "" "Docker Desktop Installer.exe" install -accept-license --installation-dir="D:\Docker\Docker" --wsl-default-data-root="D:\Docker\wsl" --windows-containers-default-data-root="D:\\Docker"
 ```
 
-## Ngrok Fee Proxy Helper
-- Get a free static subdomain: [free-static-domains-ngrok-users](https://ngrok.com/blog-post/free-static-domains-ngrok-users)
-- Ngrok Domains Dashboard: [ngrok-dashboard-domains](https://dashboard.ngrok.com/domains)
-- Inspect: [ngrok-default-inspect](http://localhost:4040)
+✔ Docker will now install entirely on `D:\`
+✔ Shortcut will appear on your desktop
 
+---
 
----------------------------------------------
+## **Option B — Install normally on `C:` (recommended for beginners)**
 
+Just download **Docker Desktop Installer.exe**, run it, and follow the prompts.
 
-# n8n raw custom README.md: ⬇️
+---
 
------------------------------------------------------------------
+# 🌍 2. Create an Ngrok Account
 
+Go to **[https://ngrok.com/](https://ngrok.com/)** and make an account.
+You'll need your **static domain** and **authtoken** later.
 
-# Self-hosted AI starter kit
+---
 
-**Self-hosted AI Starter Kit** is an open-source Docker Compose template designed to swiftly initialize a comprehensive local AI and low-code development environment.
+# 📥 3. Clone or Download the Repository
 
-![n8n.io - Screenshot](https://raw.githubusercontent.com/n8n-io/self-hosted-ai-starter-kit/main/assets/n8n-demo.gif)
+## **Option A — If you have Git installed**
 
-Curated by <https://github.com/n8n-io>, it combines the self-hosted n8n
-platform with a curated list of compatible AI products and components to
-quickly get started with building self-hosted AI workflows.
-
-> [!TIP]
-> [Read the announcement](https://blog.n8n.io/self-hosted-ai/)
-
-### What's included
-
-✅ [**Self-hosted n8n**](https://n8n.io/) - Low-code platform with over 400
-integrations and advanced AI components
-
-✅ [**Ollama**](https://ollama.com/) - Cross-platform LLM platform to install
-and run the latest local LLMs
-
-✅ [**Qdrant**](https://qdrant.tech/) - Open-source, high performance vector
-store with an comprehensive API
-
-✅ [**PostgreSQL**](https://www.postgresql.org/) -  Workhorse of the Data
-Engineering world, handles large amounts of data safely.
-
-### What you can build
-
-⭐️ **AI Agents** for scheduling appointments
-
-⭐️ **Summarize Company PDFs** securely without data leaks
-
-⭐️ **Smarter Slack Bots** for enhanced company communications and IT operations
-
-⭐️ **Private Financial Document Analysis** at minimal cost
-
-## Installation
-
-### Cloning the Repository
+Right-click your desktop → **Open Command Prompt**
+Then run:
 
 ```bash
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
+git clone https://github.com/ammar-dot-eng/self-hosted-ai-starter-kit-with-ngrok.git
 ```
 
-### Running n8n using Docker Compose
+---
 
-#### For Nvidia GPU users
+## **Option B — No Git?**
 
+Just download the ZIP from GitHub → extract it → place the folder anywhere you like (Desktop recommended).
+
+---
+
+# 🔐 4. Configure Environment Variables (`.env`)
+
+1. Go to your Ngrok dashboard → **Domains**
+2. Copy your static domain
+3. Open the `.env` file in Notepad
+
+Find the section below:
+
+```env
+# n8n Webhook Configuration
+N8N_WEBHOOK_URL=https://your-ngrok-host
+N8N_PROTOCOL=https
+N8N_HOST=your-ngrok-host
+
+# It should be just the hostname without any scheme.
+N8N_WEBHOOK_HOST=your-ngrok-host
 ```
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
-docker compose --profile gpu-nvidia up
+
+Replace **every occurrence** of `your-ngrok-host` with your actual Ngrok domain.
+
+💾 Save the file.
+
+---
+
+# 🛡 5. Configure Ngrok (`ngrok.yml`)
+
+Open `ngrok.yml` in Notepad.
+
+Find:
+
+```yaml
+tunnels:
+  custom-domain-tunnel:
+    proto: http
+    addr: n8n:5678  
+    hostname: your-ngrok-domain.ngrok-free.app
 ```
 
-> [!NOTE]
-> If you have not used your Nvidia GPU with Docker before, please follow the
-> [Ollama Docker instructions](https://github.com/ollama/ollama/blob/main/docs/docker.md).
+Replace `your-ngrok-domain.ngrok-free.app` with your static domain.
 
-### For AMD GPU users on Linux
+Next, get your **Ngrok authtoken**:
+Ngrok Dashboard → **Your Authtoken**
 
+Replace in the file:
+
+```yaml
+authtoken: your-ngrok-authtoken
 ```
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
+
+✔ Keep exactly **one space** after the colon.
+💾 Save the file.
+
+---
+
+# 🧰 6. Start the System Using Docker Compose
+
+Open the repo folder → right-click an empty area → **Open in Terminal**.
+
+Choose ONE of the following:
+
+---
+
+### 🟥 **A) AMD GPU Users**
+
+```bash
 docker compose --profile gpu-amd up
 ```
 
-#### For Mac / Apple Silicon users
+---
 
-If you're using a Mac with an M1 or newer processor, you can't expose your GPU
-to the Docker instance, unfortunately. There are two options in this case:
+### 🟦 **B) NVIDIA GPU Users**
 
-1. Run the starter kit fully on CPU, like in the section "For everyone else"
-   below
-2. Run Ollama on your Mac for faster inference, and connect to that from the
-   n8n instance
-
-If you want to run Ollama on your mac, check the
-[Ollama homepage](https://ollama.com/)
-for installation instructions, and run the starter kit as follows:
-
-```
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
-docker compose up
+```bash
+docker compose --profile gpu-nvidia up
 ```
 
-##### For Mac users running OLLAMA locally
+---
 
-If you're running OLLAMA locally on your Mac (not in Docker), you need to modify the OLLAMA_HOST environment variable
-in the n8n service configuration. Update the x-n8n section in your Docker Compose file as follows:
+### 🟩 **C) CPU-only Users**
 
-```yaml
-x-n8n: &service-n8n
-  # ... other configurations ...
-  environment:
-    # ... other environment variables ...
-    - OLLAMA_HOST=host.docker.internal:11434
-```
-
-Additionally, after you see "Editor is now accessible via: <http://localhost:5678/>":
-
-1. Head to <http://localhost:5678/home/credentials>
-2. Click on "Local Ollama service"
-3. Change the base URL to "http://host.docker.internal:11434/"
-
-#### For everyone else
-
-```
-git clone https://github.com/n8n-io/self-hosted-ai-starter-kit.git
-cd self-hosted-ai-starter-kit
+```bash
 docker compose --profile cpu up
 ```
 
-## ⚡️ Quick start and usage
+Let everything run until all services are fully up.
 
-The core of the Self-hosted AI Starter Kit is a Docker Compose file, pre-configured with network and storage settings, minimizing the need for additional installations.
-After completing the installation steps above, simply follow the steps below to get started.
+---
 
-1. Open <http://localhost:5678/> in your browser to set up n8n. You'll only
-   have to do this once.
-2. Open the included workflow:
-   <http://localhost:5678/workflow/srOnR8PAY3u4RSwb>
-3. Select **Test workflow** to start running the workflow.
-4. If this is the first time you're running the workflow, you may need to wait
-   until Ollama finishes downloading Llama3.2. You can inspect the docker
-   console logs to check on the progress.
+# 🌐 7. Access Your Services
 
-To open n8n at any time, visit <http://localhost:5678/> in your browser.
+| Service               | URL                                                                                  |
+| --------------------- | ------------------------------------------------------------------------------------ |
+| **n8n Automation UI** | [http://localhost:5678/](http://localhost:5678/)                                     |
+| **Qdrant Vector DB**  | [http://localhost:6333/dashboard#/welcome](http://localhost:6333/dashboard#/welcome) |
 
-With your n8n instance, you'll have access to over 400 integrations and a
-suite of basic and advanced AI nodes such as
-[AI Agent](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent/),
-[Text classifier](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.text-classifier/),
-and [Information Extractor](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.information-extractor/)
-nodes. To keep everything local, just remember to use the Ollama node for your
-language model and Qdrant as your vector store.
+You can also open Docker Desktop to monitor your containers.
 
-> [!NOTE]
-> This starter kit is designed to help you get started with self-hosted AI
-> workflows. While it's not fully optimized for production environments, it
-> combines robust components that work well together for proof-of-concept
-> projects. You can customize it to meet your specific needs
+---
 
-## Upgrading
+# 🎉 You're Done!
 
-* ### For Nvidia GPU setups:
+Your self-hosted AI workflow environment is now live and publicly accessible through Ngrok.
+You can now begin building automations, agent pipelines, or AI workflows in n8n.
 
-```bash
-docker compose --profile gpu-nvidia pull
-docker compose create && docker compose --profile gpu-nvidia up
-```
-
-* ### For Mac / Apple Silicon users
-
-```
-docker compose pull
-docker compose create && docker compose up
-```
-
-* ### For Non-GPU setups:
-
-```bash
-docker compose --profile cpu pull
-docker compose create && docker compose --profile cpu up
-```
-
-## 👓 Recommended reading
-
-n8n is full of useful content for getting started quickly with its AI concepts
-and nodes. If you run into an issue, go to [support](#support).
-
-- [AI agents for developers: from theory to practice with n8n](https://blog.n8n.io/ai-agents/)
-- [Tutorial: Build an AI workflow in n8n](https://docs.n8n.io/advanced-ai/intro-tutorial/)
-- [Langchain Concepts in n8n](https://docs.n8n.io/advanced-ai/langchain/langchain-n8n/)
-- [Demonstration of key differences between agents and chains](https://docs.n8n.io/advanced-ai/examples/agent-chain-comparison/)
-- [What are vector databases?](https://docs.n8n.io/advanced-ai/examples/understand-vector-databases/)
-
-## 🎥 Video walkthrough
-
-- [Installing and using Local AI for n8n](https://www.youtube.com/watch?v=xz_X2N-hPg0)
-
-## 🛍️ More AI templates
-
-For more AI workflow ideas, visit the [**official n8n AI template
-gallery**](https://n8n.io/workflows/?categories=AI). From each workflow,
-select the **Use workflow** button to automatically import the workflow into
-your local n8n instance.
-
-### Learn AI key concepts
-
-- [AI Agent Chat](https://n8n.io/workflows/1954-ai-agent-chat/)
-- [AI chat with any data source (using the n8n workflow too)](https://n8n.io/workflows/2026-ai-chat-with-any-data-source-using-the-n8n-workflow-tool/)
-- [Chat with OpenAI Assistant (by adding a memory)](https://n8n.io/workflows/2098-chat-with-openai-assistant-by-adding-a-memory/)
-- [Use an open-source LLM (via Hugging Face)](https://n8n.io/workflows/1980-use-an-open-source-llm-via-huggingface/)
-- [Chat with PDF docs using AI (quoting sources)](https://n8n.io/workflows/2165-chat-with-pdf-docs-using-ai-quoting-sources/)
-- [AI agent that can scrape webpages](https://n8n.io/workflows/2006-ai-agent-that-can-scrape-webpages/)
-
-### Local AI templates
-
-- [Tax Code Assistant](https://n8n.io/workflows/2341-build-a-tax-code-assistant-with-qdrant-mistralai-and-openai/)
-- [Breakdown Documents into Study Notes with MistralAI and Qdrant](https://n8n.io/workflows/2339-breakdown-documents-into-study-notes-using-templating-mistralai-and-qdrant/)
-- [Financial Documents Assistant using Qdrant and](https://n8n.io/workflows/2335-build-a-financial-documents-assistant-using-qdrant-and-mistralai/) [Mistral.ai](http://mistral.ai/)
-- [Recipe Recommendations with Qdrant and Mistral](https://n8n.io/workflows/2333-recipe-recommendations-with-qdrant-and-mistral/)
-
-## Tips & tricks
-
-### Accessing local files
-
-The self-hosted AI starter kit will create a shared folder (by default,
-located in the same directory) which is mounted to the n8n container and
-allows n8n to access files on disk. This folder within the n8n container is
-located at `/data/shared` -- this is the path you'll need to use in nodes that
-interact with the local filesystem.
-
-**Nodes that interact with the local filesystem**
-
-- [Read/Write Files from Disk](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.filesreadwrite/)
-- [Local File Trigger](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.localfiletrigger/)
-- [Execute Command](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.executecommand/)
-
-## 📜 License
-
-This project is licensed under the Apache License 2.0 - see the
-[LICENSE](LICENSE) file for details.
-
-## 💬 Support
-
-Join the conversation in the [n8n Forum](https://community.n8n.io/), where you
-can:
-
-- **Share Your Work**: Show off what you've built with n8n and inspire others
-  in the community.
-- **Ask Questions**: Whether you're just getting started or you're a seasoned
-  pro, the community and our team are ready to support with any challenges.
-- **Propose Ideas**: Have an idea for a feature or improvement? Let us know!
-  We're always eager to hear what you'd like to see next.
+---

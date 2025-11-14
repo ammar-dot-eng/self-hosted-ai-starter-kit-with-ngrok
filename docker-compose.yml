@@ -9,6 +9,8 @@ networks:
 
 x-n8n: &service-n8n
   image: n8nio/n8n:latest
+  ports:
+  - "5678:5678"
   networks: ['demo']
   environment:
     - DB_TYPE=postgresdb
@@ -22,29 +24,31 @@ x-n8n: &service-n8n
     - OLLAMA_VOLUME=${OLLAMA_VOLUME}
     - OLLAMA_HOST=ollama:11434
     - N8N_PROTOCOL=${N8N_PROTOCOL}
-    - N8N_HOST=${N8N_HOST}
     - WEBHOOK_URL=${N8N_WEBHOOK_URL}
 
 x-ollama: &service-ollama
   image: ollama/ollama:latest
+  container_name: ollama
   networks: ['demo']
   restart: unless-stopped
   ports:
-    - "11434:11434"
+    - 11434:11434
   volumes:
-    - OLLAMA_VOLUME:/root/.ollama
+    - ollama_storage:/root/.ollama
 
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
   networks: ['demo']
+  container_name: ollama-pull-llama
   volumes:
-    - OLLAMA_VOLUME:/root/.ollama
+    - ollama_storage:/root/.ollama
   entrypoint: /bin/sh
   environment:
     - OLLAMA_HOST=ollama:11434
   command:
     - "-c"
-    - "sleep 3; ollama pull llama3.2"
+    - "sleep 3"
+
 
 services:
   postgres:
@@ -52,6 +56,8 @@ services:
     hostname: postgres
     networks: ['demo']
     restart: unless-stopped
+    ports:
+    - "5432:5432"
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -149,8 +155,8 @@ services:
       - ollama-gpu
 
   ollama-pull-llama-gpu-amd:
-    profiles: ["gpu-amd"]
+    profiles: [gpu-amd]
     <<: *init-ollama
     image: ollama/ollama:rocm
     depends_on:
-      - ollama-gpu-amd
+     - ollama-gpu-amd
