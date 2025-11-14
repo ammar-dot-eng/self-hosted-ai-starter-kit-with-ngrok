@@ -27,6 +27,8 @@
 
 ---
 
+
+
 # 🛠 1. Install Docker Desktop
 
 ## **Option A — Install Docker on the `D:` drive (advanced users)**
@@ -60,12 +62,16 @@ Just download **Docker Desktop Installer.exe**, run it, and follow the prompts.
 
 ---
 
+
+
 # 🌍 2. Create an Ngrok Account
 
 Go to **[https://ngrok.com/](https://ngrok.com/)** and make an account.
 You'll need your **static domain** and **authtoken** later.
 
 ---
+
+
 
 # 📥 3. Clone or Download the Repository
 
@@ -85,6 +91,8 @@ git clone https://github.com/ammar-dot-eng/self-hosted-ai-starter-kit-with-ngrok
 Just download the ZIP from GitHub → extract it → place the folder anywhere you like (Desktop recommended).
 
 ---
+
+
 
 # 🔐 4. Configure Environment Variables (`.env`)
 
@@ -109,6 +117,8 @@ Replace **every occurrence** of `your-ngrok-host` with your actual Ngrok domain.
 💾 Save the file.
 
 ---
+
+
 
 # 🛡 5. Configure Ngrok (`ngrok.yml`)
 
@@ -140,6 +150,8 @@ authtoken: your-ngrok-authtoken
 
 ---
 
+
+
 # 🧰 6. Start the System Using Docker Compose
 
 Open the repo folder → right-click an empty area → **Open in Terminal**.
@@ -156,7 +168,7 @@ docker compose --profile gpu-amd up
 
 ---
 
-### 🟦 **B) NVIDIA GPU Users**
+### 🟩 **B) NVIDIA GPU Users**
 
 ```bash
 docker compose --profile gpu-nvidia up
@@ -164,15 +176,21 @@ docker compose --profile gpu-nvidia up
 
 ---
 
-### 🟩 **C) CPU-only Users**
+### 🟦 **C) CPU-only Users**
 
 ```bash
 docker compose --profile cpu up
 ```
 
-Let everything run until all services are fully up.
+Let everything run and keep command prompt open to be safe, until all services are fully up then u can close it.
+
+after all is done u can see the pulled images in the images tab on docker desktop
+
+and ur compose container will be in the containers tab
 
 ---
+
+
 
 # 🌐 7. Access Your Services
 
@@ -181,13 +199,72 @@ Let everything run until all services are fully up.
 | **n8n Automation UI** | [http://localhost:5678/](http://localhost:5678/)                                     |
 | **Qdrant Vector DB**  | [http://localhost:6333/dashboard#/welcome](http://localhost:6333/dashboard#/welcome) |
 
-You can also open Docker Desktop to monitor your containers.
+---
+
+
+
+# 🔄 Updating n8n to the Latest Version
+
+If you ever want to update to the newest n8n image, follow these steps:
+
+### **1. Stop and delete your compose container**
+
+In **Docker Desktop → Containers**, select your compose group:
+
+* Stop it
+* Delete it
+
+> Again — **this does NOT remove your data** because all important data is stored in volumes.
 
 ---
 
-# 🎉 You're Done!
+### **2. Delete the old image**
 
-Your self-hosted AI workflow environment is now live and publicly accessible through Ngrok.
-You can now begin building automations, agent pipelines, or AI workflows in n8n.
+In **Docker Desktop** → **Images tab**:
+🗑 Delete the **n8n** image.
+
+> This **will NOT delete your files** or workflows.
+
+---
+
+### **3. Pull the updated image**
+
+Open your repo folder → **Open Terminal** → Run your correct startup command:
+
+#### AMD GPU
+
+```bash
+docker compose --profile gpu-amd up
+```
+
+#### NVIDIA GPU
+
+```bash
+docker compose --profile gpu-nvidia up
+```
+
+#### CPU only
+
+```bash
+docker compose --profile cpu up
+```
+
+Docker will automatically pull the latest versions of n8n.
+
+if you want to update all services, then delete all used the images before u run ur start command
+---
+
+# ⚠️ Important Warning: Never Rename Your `files` Folder
+
+Once you assign a name to your `files` folder (where n8n stores its project data), **NEVER change its name**, especially after updates.
+
+Renaming this folder can result in:
+
+* ❌ Lost workflows
+* ❌ Lost credentials
+* ❌ Broken volumes
+* ❌ Data corruption
+
+🔥 **If you change the folder name, you risk losing all your data. If it ain't broke don't fix it.**
 
 ---
