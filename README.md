@@ -1,6 +1,6 @@
 # 🚀 Self-Hosted AI Starter Kit (with Ngrok)
 
-*A beginner-friendly fork of the excellent original project.*
+*A beginner-friendly fork of an excellent original project.*
 
 > **Forked from:** [https://github.com/DevilUpperCase/self-hosted-ai-starter-kit-with-ngrok](https://github.com/DevilUpperCase/self-hosted-ai-starter-kit-with-ngrok)
 > This version includes **beginner-friendly setup instructions** and simplifies the entire process of self-hosting AI tools using Docker + Ngrok, And adds some code fixes that worked for myself. 
