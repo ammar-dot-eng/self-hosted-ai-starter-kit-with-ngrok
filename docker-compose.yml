@@ -3,14 +3,14 @@ volumes:
   postgres_storage:
   ollama_storage:
   qdrant_storage:
+  nocodb_storage: # <-- ADDED for NocoDB attachments/data
+  budibase_storage: # <-- ADDED for Budibase data
 
 networks:
   demo:
 
 x-n8n: &service-n8n
   image: n8nio/n8n:latest
-  ports:
-  - "5678:5678"
   networks: ['demo']
   environment:
     - DB_TYPE=postgresdb
@@ -26,6 +26,10 @@ x-n8n: &service-n8n
     - OLLAMA_HOST=ollama:11434
     - N8N_PROTOCOL=${N8N_PROTOCOL}
     - WEBHOOK_URL=${N8N_WEBHOOK_URL}
+    # --- QUEUE MODE SETTINGS ---
+    - EXECUTIONS_MODE=queue
+    - QUEUE_BULL_REDIS_HOST=redis
+    - QUEUE_BULL_REDIS_PORT=6379
 
 x-ollama: &service-ollama
   image: ollama/ollama:latest
@@ -50,7 +54,6 @@ x-init-ollama: &init-ollama
     - "-c"
     - "sleep 3"
 
-
 services:
   postgres:
     image: postgres:16-alpine
@@ -67,6 +70,17 @@ services:
       - postgres_storage:/var/lib/postgresql/data
     healthcheck:
       test: ['CMD-SHELL', 'pg_isready -h localhost -U ${POSTGRES_USER} -d ${POSTGRES_DB}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    hostname: redis
+    networks: ['demo']
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 5s
       timeout: 5s
       retries: 10
@@ -97,8 +111,46 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_healthy
       n8n-import:
         condition: service_completed_successfully
+
+  n8n-worker:
+    <<: *service-n8n
+    hostname: n8n-worker
+    restart: unless-stopped
+    command: worker
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+  nocodb:
+    image: nocodb/nocodb:latest
+    hostname: nocodb
+    networks: ['demo']
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    environment:
+      - NC_DB=pg://postgres:5432?u=${POSTGRES_USER}&p=${POSTGRES_PASSWORD}&d=${POSTGRES_DB}
+    volumes:
+      - nocodb_storage:/usr/app/data
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  budibase:
+    image: budibase/budibase:latest
+    hostname: budibase
+    networks: ['demo']
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+    volumes:
+      - budibase_storage:/data
 
   qdrant:
     image: qdrant/qdrant
@@ -120,6 +172,26 @@ services:
     restart: unless-stopped
     ports:
       - 4040:4040
+
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest-fat
+    hostname: stirling-pdf
+    networks: ['demo']
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - DOCKER_ENABLE_SECURITY=false
+      - DISABLE_ADDITIONAL_FEATURES=false
+      - SECURITY_CUSTOMGLOBALAPIKEY=my-super-secret-key
+
+  qr-api:
+    image: rmarcello/qr-generator:latest
+    container_name: qr-api
+    restart: unless-stopped
+    ports:
+      - "8888:8080"
+
   ollama-cpu:
     profiles: ["cpu"]
     <<: *service-ollama
