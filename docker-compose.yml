@@ -85,19 +85,6 @@ services:
       timeout: 5s
       retries: 10
 
-  n8n-import:
-    <<: *service-n8n
-    hostname: n8n-import
-    entrypoint: /bin/sh
-    command:
-      - "-c"
-      - "n8n import:credentials --separate --input=/backup/credentials && n8n import:workflow --separate --input=/backup/workflows"
-    volumes:
-      - ./n8n/backup:/backup
-    depends_on:
-      postgres:
-        condition: service_healthy
-
   n8n:
     <<: *service-n8n
     hostname: n8n
@@ -113,8 +100,6 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      n8n-import:
-        condition: service_completed_successfully
 
   n8n-worker:
     <<: *service-n8n
@@ -141,16 +126,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-
-  budibase:
-    image: budibase/budibase:latest
-    hostname: budibase
-    networks: ['demo']
-    restart: unless-stopped
-    ports:
-      - "8083:80"
-    volumes:
-      - budibase_storage:/data
 
   qdrant:
     image: qdrant/qdrant
@@ -184,13 +159,6 @@ services:
       - DOCKER_ENABLE_SECURITY=false
       - DISABLE_ADDITIONAL_FEATURES=false
       - SECURITY_CUSTOMGLOBALAPIKEY=my-super-secret-key
-
-  qr-api:
-    image: rmarcello/qr-generator:latest
-    container_name: qr-api
-    restart: unless-stopped
-    ports:
-      - "8888:8080"
 
   ollama-cpu:
     profiles: ["cpu"]
