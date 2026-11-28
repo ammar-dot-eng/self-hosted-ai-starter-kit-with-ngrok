@@ -3,8 +3,7 @@ volumes:
   postgres_storage:
   ollama_storage:
   qdrant_storage:
-  nocodb_storage: # <-- ADDED for NocoDB attachments/data
-  budibase_storage: # <-- ADDED for Budibase data
+  nocodb_storage:
 
 networks:
   demo:
